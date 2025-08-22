@@ -18,7 +18,6 @@ router.post('/register', [
     .isLength({ min: 6 })
     .withMessage('Password must be at least 6 characters long'),
   body('email')
-    .optional()
     .isEmail()
     .withMessage('Please provide a valid email address')
 ], async (req, res) => {
@@ -47,14 +46,14 @@ router.post('/register', [
       return res.status(400).json({ message: 'Company name already exists' });
     }
 
-    // Check if username already exists
+    // Check if email already exists
     const existingUser = await User.findOne({
-      where: { username },
+      where: { email },
       transaction: t
     });
     if (existingUser) {
       await t.rollback();
-      return res.status(400).json({ message: 'Username already exists' });
+      return res.status(400).json({ message: 'Email already exists' });
     }
 
     // Create new company
@@ -66,6 +65,7 @@ router.post('/register', [
     // Create admin user for the company
     const user = await User.create({
       username,
+      email,
       password,
       role: 'Admin', // Force Admin role for company registration
       company_id: company.id
@@ -84,6 +84,7 @@ router.post('/register', [
       user: {
         id: user.id,
         username: user.username,
+        email: user.email,
         role: user.role,
         company_id: company.id,
         company: {
@@ -101,7 +102,7 @@ router.post('/register', [
 
 // Login user
 router.post('/login', [
-  body('username').notEmpty().withMessage('Username is required'),
+  body('email').isEmail().withMessage('Please provide a valid email'),
   body('password').notEmpty().withMessage('Password is required')
 ], async (req, res) => {
   try {
@@ -114,11 +115,11 @@ router.post('/login', [
       });
     }
 
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    // Find user by username with company info
+    // Find user by email with company info
     const user = await User.findOne({
-      where: { username },
+      where: { email },
       include: [{
         model: Company,
         as: 'company',
@@ -152,6 +153,7 @@ router.post('/login', [
       user: {
         id: user.id,
         username: user.username,
+        email: user.email,
         role: user.role,
         company_id: user.company_id,
         company: {

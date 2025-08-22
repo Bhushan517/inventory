@@ -10,6 +10,7 @@ const Users = () => {
   const [editingUser, setEditingUser] = useState(null);
   const [formData, setFormData] = useState({
     username: '',
+    email: '',
     password: '',
     role: 'Staff'
   });
@@ -62,6 +63,7 @@ const Users = () => {
     setEditingUser(user);
     setFormData({
       username: user.username,
+      email: user.email || '',
       password: '', // Don't populate password for security
       role: user.role
     });
@@ -82,6 +84,7 @@ const Users = () => {
   const resetForm = () => {
     setFormData({
       username: '',
+      email: '',
       password: '',
       role: 'Staff'
     });
@@ -131,6 +134,9 @@ const Users = () => {
                   Username
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Email
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Role
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -155,6 +161,9 @@ const Users = () => {
                         {user.username}
                       </div>
                     </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {user.email || 'N/A'}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
@@ -217,6 +226,17 @@ const Users = () => {
                   name="username"
                   required
                   value={formData.username}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Email Address</label>
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  value={formData.email}
                   onChange={handleInputChange}
                   className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />

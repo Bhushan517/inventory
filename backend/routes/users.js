@@ -59,6 +59,9 @@ router.post('/', [
   body('username')
     .isLength({ min: 3, max: 50 })
     .withMessage('Username must be between 3 and 50 characters'),
+  body('email')
+    .isEmail()
+    .withMessage('Please provide a valid email'),
   body('password')
     .isLength({ min: 6 })
     .withMessage('Password must be at least 6 characters long'),
@@ -75,7 +78,7 @@ router.post('/', [
       });
     }
 
-    const { username, password, role } = req.body;
+    const { username, email, password, role } = req.body;
     const currentUserRole = req.user.role;
 
     // Role creation rules
@@ -85,14 +88,15 @@ router.post('/', [
       });
     }
 
-    // Check if username already exists (globally, not just in company)
-    const existingUser = await User.findOne({ where: { username } });
+    // Check if email already exists (globally, not just in company)
+    const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
-      return res.status(400).json({ message: 'Username already exists' });
+      return res.status(400).json({ message: 'Email already exists' });
     }
 
     const user = await User.create({
       username,
+      email,
       password,
       role,
       company_id: req.user.company_id
@@ -124,6 +128,10 @@ router.put('/:id', [
     .optional()
     .isLength({ min: 3, max: 50 })
     .withMessage('Username must be between 3 and 50 characters'),
+  body('email')
+    .optional()
+    .isEmail()
+    .withMessage('Please provide a valid email'),
   body('password')
     .optional()
     .isLength({ min: 6 })

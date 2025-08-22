@@ -5,7 +5,7 @@ import { setToken, setUserRole } from '../utils/auth';
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    username: '',
+    email: '',
     password: ''
   });
   const [loading, setLoading] = useState(false);
@@ -30,6 +30,7 @@ const Login = () => {
       setUserRole(role);
       // Store user info for profile display
       localStorage.setItem('username', user.username);
+      localStorage.setItem('email', user.email);
       localStorage.setItem('companyId', companyId);
       localStorage.setItem('companyName', user.company.name);
 
@@ -64,21 +65,21 @@ const Login = () => {
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="space-y-5">
                 <div>
-                  <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
-                    Username
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                    Email Address
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <span className="text-gray-400 text-lg">👤</span>
+                      <span className="text-gray-400 text-lg">📧</span>
                     </div>
                     <input
-                      id="username"
-                      name="username"
-                      type="text"
+                      id="email"
+                      name="email"
+                      type="email"
                       required
                       className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 hover:border-gray-400"
-                      placeholder="Enter your username"
-                      value={formData.username}
+                      placeholder="Enter your email address"
+                      value={formData.email}
                       onChange={handleChange}
                     />
                   </div>

@@ -172,7 +172,7 @@ const Register = () => {
 
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    Email (Optional)
+                    Email Address
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -182,8 +182,9 @@ const Register = () => {
                       id="email"
                       name="email"
                       type="email"
+                      required
                       className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 hover:border-gray-400"
-                      placeholder="Enter company email"
+                      placeholder="Enter your email address"
                       value={formData.email}
                       onChange={handleChange}
                     />

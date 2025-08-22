@@ -21,27 +21,17 @@ const Dashboard = () => {
 
   const fetchDashboardData = async () => {
     try {
-      // Only Admin and Manager can access reports
-      if (userRole === 'Admin' || userRole === 'Manager') {
-        const response = await api.get('/reports/dashboard-summary');
-        setStats(response.data);
-      } else {
-        // For Staff, show basic stats
-        setStats({
-          totalProducts: 'N/A',
-          totalTransactions: 'N/A',
-          lowStockItems: 'N/A',
-          recentTransactions: 'Available'
-        });
-      }
+      // All authenticated users can access dashboard summary
+      const response = await api.get('/reports/dashboard-summary');
+      setStats(response.data);
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
       // Set fallback data
       setStats({
-        totalProducts: '--',
-        totalTransactions: '--',
-        lowStockItems: '--',
-        recentTransactions: '--'
+        totalProducts: 0,
+        totalTransactions: 0,
+        lowStockItems: 0,
+        recentTransactions: 0
       });
     } finally {
       setLoading(false);

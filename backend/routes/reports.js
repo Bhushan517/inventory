@@ -183,8 +183,8 @@ router.get('/low-stock', authorizeRoles('Admin', 'Manager'), async (req, res) =>
   }
 });
 
-// Dashboard summary (Admin and Manager only)
-router.get('/dashboard-summary', authorizeRoles('Admin', 'Manager'), async (req, res) => {
+// Dashboard summary (All authenticated users)
+router.get('/dashboard-summary', authenticateToken, async (req, res) => {
   try {
     const companyId = req.user.company_id;
 
