@@ -47,6 +47,7 @@ const Layout = ({ children }) => {
   };
 
   const navigationItems = getNavigationItems();
+  const year = new Date().getFullYear();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -150,7 +151,7 @@ const Layout = ({ children }) => {
       <footer className="bg-white border-t border-gray-200 mt-auto">
         <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
           <div className="text-center text-sm text-gray-500">
-            © 2024 Inventory Management System. Made with ❤️
+            &copy; {year} Inventory Management System. Made with ❤️
           </div>
         </div>
       </footer>
